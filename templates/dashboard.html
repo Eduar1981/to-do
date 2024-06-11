@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+    {% block content %}
+    <h2>Dashboard</h2>
+    <form action="{{ url_for('dashboard') }}" method="post">
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.task.label }} {{ form.task }}
+        </div>
+        <div>
+            {{ form.submit }}
+        </div>
+    </form>
+
+    <h3>Tus Tareas</h3>
+    <ul>
+        {% for task in tasks %}
+            <li>
+                {{ task[2] }}
+                {% if not task[3] %}
+                    <a href="{{url_for('complete_task', task_id=task[0]) }}">Marcar como completada</a>
+                {% else %}
+                    (Completa)
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('logout') }}">Cerrar sesión</a>
+    {% endblock %}
